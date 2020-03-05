@@ -79,12 +79,14 @@
 
 
 
-<meta name="description" content="写一些平时码code的一点小收货。。。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="WOW">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="深度选择器1. stylus, css使用方法：1.parent &gt;&gt;&gt; .child&amp;#123;&amp;#125; 2. less使用方法：123.parent &amp;#123;  &#x2F;deep&#x2F; .child&amp;#123;&amp;#125;&amp;#125; 3. sass使用方法：1.parent &#x2F;deep&#x2F; .child&amp;#123;&amp;#125;  watch深度监听用法监听对象属性的变化（方式一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue开发小技巧">
+<meta property="og:url" content="http://yoursite.com/2020/03/05/vue-tips/index.html">
 <meta property="og:site_name" content="WOW">
-<meta property="og:description" content="写一些平时码code的一点小收货。。。">
+<meta property="og:description" content="深度选择器1. stylus, css使用方法：1.parent &gt;&gt;&gt; .child&amp;#123;&amp;#125; 2. less使用方法：123.parent &amp;#123;  &#x2F;deep&#x2F; .child&amp;#123;&amp;#125;&amp;#125; 3. sass使用方法：1.parent &#x2F;deep&#x2F; .child&amp;#123;&amp;#125;  watch深度监听用法监听对象属性的变化（方式一">
+<meta property="article:published_time" content="2020-03-05T16:02:02.000Z">
+<meta property="article:modified_time" content="2020-03-05T08:51:04.904Z">
 <meta property="article:author" content="yilidan">
 <meta name="twitter:card" content="summary">
 
@@ -116,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/05/vue-tips/"/>
 
 
 
 
 
-  <title>WOW</title>
+  <title>Vue开发小技巧 | WOW</title>
   
 
 
@@ -141,8 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -219,9 +220,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -251,9 +252,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/myblog/2020/03/05/vue-tips/" itemprop="url">Vue开发小技巧</a></h1>
+          <h1 class="post-title" itemprop="name headline">Vue开发小技巧</h1>
         
 
         <div class="post-meta">
@@ -303,9 +302,7 @@
       
 
       
-        
-          
-            <h3 id="深度选择器"><a href="#深度选择器" class="headerlink" title="深度选择器"></a>深度选择器</h3><h5 id="1-stylus-css使用方法："><a href="#1-stylus-css使用方法：" class="headerlink" title="1. stylus, css使用方法："></a>1. stylus, css使用方法：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.parent &gt;&gt;&gt; .child&#123;&#125;</span><br></pre></td></tr></table></figure>
+        <h3 id="深度选择器"><a href="#深度选择器" class="headerlink" title="深度选择器"></a>深度选择器</h3><h5 id="1-stylus-css使用方法："><a href="#1-stylus-css使用方法：" class="headerlink" title="1. stylus, css使用方法："></a>1. stylus, css使用方法：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.parent &gt;&gt;&gt; .child&#123;&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="2-less使用方法："><a href="#2-less使用方法：" class="headerlink" title="2. less使用方法："></a>2. less使用方法：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.parent &#123;</span><br><span class="line">  /deep/ .child&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="3-sass使用方法："><a href="#3-sass使用方法：" class="headerlink" title="3. sass使用方法："></a>3. sass使用方法：</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.parent /deep/ .child&#123;&#125;</span><br></pre></td></tr></table></figure>
 
@@ -332,8 +329,6 @@
 <h3 id="1-100随机数（整数）"><a href="#1-100随机数（整数）" class="headerlink" title="1-100随机数（整数）"></a>1-100随机数（整数）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> sum(m,n) &#123;</span><br><span class="line">  var num = Math.floor(Math.random()*(m - n) + n)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum(1, 100)</span><br></pre></td></tr></table></figure>
 
 <h3 id="关闭eslint检查（局部）"><a href="#关闭eslint检查（局部）" class="headerlink" title="关闭eslint检查（局部）"></a>关闭eslint检查（局部）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/* eslint-disable */</span><br><span class="line">  <span class="function"><span class="title">test</span></span>() &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">/* eslint-enable */</span><br></pre></td></tr></table></figure>
-          
-        
       
     </div>
     
@@ -350,146 +345,28 @@
       
 
       
-
-      
-
       
       
-        <div class="post-eof"></div>
+
       
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/myblog/2020/02/03/h5-tips/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yilidan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/myblog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WOW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/myblog/2020/02/03/h5-tips/" itemprop="url">移动端开发小技巧</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-03T10:38:20+00:00">
-                2020-02-03
-              </time>
+              <a href="/myblog/2020/02/03/h5-tips/" rel="next" title="移动端开发小技巧">
+                <i class="fa fa-chevron-left"></i> 移动端开发小技巧
+              </a>
             
+          </div>
 
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
             
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+          </div>
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <h4 id="获取移动端-ua-来判断设备类型"><a href="#获取移动端-ua-来判断设备类型" class="headerlink" title="获取移动端 ua ,来判断设备类型"></a>获取移动端 ua ,来判断设备类型</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">var ua = navigator.userAgent.toLowerCase();</span><br><span class="line"></span><br><span class="line">// 是否ios</span><br><span class="line">var bIsIphoneOs = ua.match(/iphone os/i) == <span class="string">"iphone os"</span>;</span><br><span class="line"></span><br><span class="line">// 是否为android</span><br><span class="line">var bIsAndroid = ua.match(/android/i) == <span class="string">"android"</span>;</span><br><span class="line"></span><br><span class="line">// 是否在微信浏览器中</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">is_weixin</span></span>()&#123;</span><br><span class="line">  <span class="keyword">if</span> (ua.match(/MicroMessenger/i) == <span class="string">'micromessenger'</span>) &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 是否在微博浏览器中</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">is_weibo</span></span>()&#123;</span><br><span class="line">  <span class="keyword">if</span> (ua.match(/Weibo/i) == <span class="string">"weibo"</span>) &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="判断是否为移动端"><a href="#判断是否为移动端" class="headerlink" title="判断是否为移动端"></a>判断是否为移动端</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) &#123;</span><br><span class="line">  // 跳转到移动端的链接</span><br><span class="line">    window.location.href=<span class="string">""</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  // 不是移动端</span><br><span class="line">  <span class="built_in">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="在移动端中转化时间格式问题"><a href="#在移动端中转化时间格式问题" class="headerlink" title="在移动端中转化时间格式问题"></a>在移动端中转化时间格式问题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 在移动端中，时间格式为 <span class="string">'2019/03/08 15:28'</span> 这种时间格式，比如</span><br><span class="line">var data = new Date(<span class="string">'2019-03-08 15:28'</span>);</span><br><span class="line">// 如上的时间格式，转换出来为NaN</span><br><span class="line">// 需要把 <span class="string">'-'</span> 替换成 <span class="string">'/'</span></span><br><span class="line">var time = <span class="string">'2019-03-08 15:28'</span>;</span><br><span class="line">time = time.replace(/-/g, <span class="string">'/'</span>);</span><br><span class="line">var data = new Date(time).getTime();</span><br><span class="line">// 才能得出毫秒数 1552030320000</span><br></pre></td></tr></table></figure>
-
-<h4 id="解决多个输入框在ios微信下点击错位导致弹窗层消失和无法点击问题"><a href="#解决多个输入框在ios微信下点击错位导致弹窗层消失和无法点击问题" class="headerlink" title="解决多个输入框在ios微信下点击错位导致弹窗层消失和无法点击问题"></a>解决多个输入框在ios微信下点击错位导致弹窗层消失和无法点击问题</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">scrollViews</span></span>() &#123;</span><br><span class="line">  setTimeout(() =&gt; &#123;</span><br><span class="line">    const scrollT = document.documentElement.scrollTop || document.body.scrollTop || 0</span><br><span class="line">    window.scrollTo(0, Math.max(scrollT - 1, 0))</span><br><span class="line">  &#125;, 200)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="移动端打开指定App或者下载App"><a href="#移动端打开指定App或者下载App" class="headerlink" title="移动端打开指定App或者下载App"></a>移动端打开指定App或者下载App</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">navToDownApp</span></span>() &#123;</span><br><span class="line">  <span class="built_in">let</span> u = navigator.userAgent</span><br><span class="line">  <span class="keyword">if</span> (/MicroMessenger/gi.test(u)) &#123;</span><br><span class="line">    // 如果是微信客户端打开，引导用户在浏览器中打开</span><br><span class="line">    alert(<span class="string">'请在浏览器中打开'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (u.indexOf(<span class="string">'Android'</span>) &gt; -1 || u.indexOf(<span class="string">'Linux'</span>) &gt; -1) &#123;</span><br><span class="line">    // Android</span><br><span class="line">    <span class="keyword">if</span> (this.openApp(<span class="string">'en://startapp'</span>)) &#123;</span><br><span class="line">      this.openApp(<span class="string">'en://startapp'</span>) // 通过Scheme协议打开指定APP</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      //跳转Android下载地址</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (u.indexOf(<span class="string">'iPhone'</span>) &gt; -1) &#123;</span><br><span class="line">    <span class="keyword">if</span> (this.openApp(<span class="string">'ios--scheme'</span>)) &#123;</span><br><span class="line">      this.openApp(<span class="string">'ios--scheme'</span>) // 通过Scheme协议打开指定APP</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      // 跳转IOS下载地址</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line">openApp(src) &#123;</span><br><span class="line">  // 通过iframe的方式试图打开APP，如果能正常打开，会直接切换到APP，并自动阻止a标签的默认行为</span><br><span class="line">  // 否则打开a标签的href链接</span><br><span class="line">  <span class="built_in">let</span> ifr = document.createElement(<span class="string">'iframe'</span>)</span><br><span class="line">  ifr.src = src</span><br><span class="line">  ifr.style.display = <span class="string">'none'</span></span><br><span class="line">  document.body.appendChild(ifr)</span><br><span class="line">  window.setTimeout(<span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">    // 打开App后移出这个iframe</span><br><span class="line">    document.body.removeChild(ifr)</span><br><span class="line">  &#125;, 2000)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h4 id="上传图片把本地图片转换为url"><a href="#上传图片把本地图片转换为url" class="headerlink" title="上传图片把本地图片转换为url"></a>上传图片把本地图片转换为url</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> imgUrl = URL.createObjectURL(file)</span><br></pre></td></tr></table></figure>
-
-<h4 id="移动端滑屏插件"><a href="#移动端滑屏插件" class="headerlink" title="移动端滑屏插件"></a>移动端滑屏插件</h4><p><a href="https://alvarotrigo.com/fullPage/zh/" target="_blank" rel="noopener">fullPage插件</a></p>
-<h4 id="跨域保存Cookie"><a href="#跨域保存Cookie" class="headerlink" title="跨域保存Cookie"></a>跨域保存Cookie</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">1. 需要在.html文件中 &lt;head&gt;&lt;/head&gt; 标签里加上，填写的是主域名</span><br><span class="line">&lt;script&gt;document.domain = <span class="string">'datangzww.com'</span>&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">2. 设置Cookie</span><br><span class="line">  <span class="comment"># // expires 过期时间 （如一天为24*60*60*1000）</span></span><br><span class="line">  <span class="built_in">export</span> const setCookie = (name, value, domain, path, expires) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (expires) &#123;</span><br><span class="line">      expires = new Date(+new Date() + expires)</span><br><span class="line">    &#125;</span><br><span class="line">    var tempcookie = name + <span class="string">'='</span> + escape(value) + ((expires) ? <span class="string">'; expires='</span> + expires.toGMTString() : <span class="string">''</span>) + ((path) ? <span class="string">'; path='</span> + path : <span class="string">''</span>) + ((domain) ? <span class="string">'; domain='</span> + domain : <span class="string">''</span>)</span><br><span class="line">    <span class="comment"># // Ensure the cookie's size is under the limitation</span></span><br><span class="line">    <span class="keyword">if</span> (tempcookie.length &lt; 4096) &#123;</span><br><span class="line">      document.cookie = tempcookie</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># // 调用</span></span><br><span class="line">  <span class="comment"># // 设置domain时，填写主域名，需要加个'.';</span></span><br><span class="line">  setCookie(<span class="string">'tf'</span>, 1, <span class="string">'.datangzww.com'</span>, <span class="string">'/'</span>, 0)</span><br><span class="line">    </span><br><span class="line">3. 获取Cookie</span><br><span class="line">  <span class="built_in">export</span> const getCookie = name =&gt; &#123;</span><br><span class="line">    var arr, reg = new RegExp(<span class="string">"(^| )"</span> + name + <span class="string">"=([^;]*)(;|$)"</span>)</span><br><span class="line">    <span class="keyword">if</span> (arr = document.cookie.match(reg)) &#123;</span><br><span class="line">      <span class="built_in">return</span> (arr[2])</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="built_in">return</span> null</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># // 调用</span></span><br><span class="line">  getCookie(<span class="string">'tf'</span>)</span><br></pre></td></tr></table></figure>
-
-<h3 id="未完待续…"><a href="#未完待续…" class="headerlink" title="未完待续…"></a>未完待续…</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -499,130 +376,11 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/myblog/2020/01/02/welcome/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yilidan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/myblog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WOW">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/myblog/2020/01/02/welcome/" itemprop="url">Welcome</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-02T15:05:17+00:00">
-                2020-01-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>欢迎来到yilidan的博客，该博客主要记录平时在做项目上的一些开发小技巧，希望大家有所收获！</p>
-
-          
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
@@ -630,6 +388,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -650,8 +412,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -703,6 +474,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#深度选择器"><span class="nav-number">1.</span> <span class="nav-text">深度选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-stylus-css使用方法："><span class="nav-number">1.0.1.</span> <span class="nav-text">1. stylus, css使用方法：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-less使用方法："><span class="nav-number">1.0.2.</span> <span class="nav-text">2. less使用方法：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-sass使用方法："><span class="nav-number">1.0.3.</span> <span class="nav-text">3. sass使用方法：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch深度监听用法"><span class="nav-number">2.</span> <span class="nav-text">watch深度监听用法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#监听对象属性的变化（方式一）"><span class="nav-number">2.0.1.</span> <span class="nav-text">监听对象属性的变化（方式一）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#监听对象属性的变化（方法二）"><span class="nav-number">2.1.</span> <span class="nav-text">监听对象属性的变化（方法二）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#keep-alive的使用"><span class="nav-number">3.</span> <span class="nav-text">keep-alive的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ref的使用"><span class="nav-number">4.</span> <span class="nav-text">ref的使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vue定义全局方法，调用其他组件的方法"><span class="nav-number">5.</span> <span class="nav-text">vue定义全局方法，调用其他组件的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决vue-router中，当页面地址栏参数变化时，页面不刷新的问题"><span class="nav-number">6.</span> <span class="nav-text">解决vue-router中，当页面地址栏参数变化时，页面不刷新的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-cli配置-开启Gzip"><span class="nav-number">7.</span> <span class="nav-text">Vue-cli配置 - 开启Gzip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-router开启-history-模式"><span class="nav-number">8.</span> <span class="nav-text">Vue-router开启 history 模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#按钮点击态"><span class="nav-number">9.</span> <span class="nav-text">按钮点击态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-100随机数（整数）"><span class="nav-number">10.</span> <span class="nav-text">1-100随机数（整数）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭eslint检查（局部）"><span class="nav-number">11.</span> <span class="nav-text">关闭eslint检查（局部）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -837,6 +624,10 @@
 
 
   
+  <script type="text/javascript" src="/myblog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/myblog/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
