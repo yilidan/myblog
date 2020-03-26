@@ -1,2 +1,2 @@
 # 我的博客 
-### 地址：https://yilidan.github.io/myblog
+### https://yilidan.github.io/myblog
