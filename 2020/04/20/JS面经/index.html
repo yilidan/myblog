@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/myblog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/myblog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/myblog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/myblog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/myblog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/myblog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/myblog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. js判断类型的方法12345678910111. typeof# 无法判断引用数据类型2. Object.prototype.toString()Object.prototype.toString.call(&amp;#123;&amp;#125;)    &#x2F;&#x2F; &#39;[object Object]&#39;3. instanceof# 适用于判断Object数据类型var arr &#x3D; []arr instanceof">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript面经">
+<meta property="og:url" content="http://yoursite.com/2020/04/20/JS%E9%9D%A2%E7%BB%8F/index.html">
+<meta property="og:site_name" content="WOW">
+<meta property="og:description" content="1. js判断类型的方法12345678910111. typeof# 无法判断引用数据类型2. Object.prototype.toString()Object.prototype.toString.call(&amp;#123;&amp;#125;)    &#x2F;&#x2F; &#39;[object Object]&#39;3. instanceof# 适用于判断Object数据类型var arr &#x3D; []arr instanceof">
+<meta property="article:published_time" content="2020-04-20T16:18:59.000Z">
+<meta property="article:modified_time" content="2020-04-20T10:21:21.059Z">
+<meta property="article:author" content="yilidan">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/myblog/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/04/20/JS面经/"/>
+
+
+
+
+
+  <title>JavaScript面经 | WOW</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/myblog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WOW</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">时间就是金钱，我的朋友！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/myblog/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/myblog/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/myblog/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/myblog/2020/04/20/JS%E9%9D%A2%E7%BB%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yilidan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/myblog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WOW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JavaScript面经</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-20T16:18:59+00:00">
+                2020-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-js判断类型的方法"><a href="#1-js判断类型的方法" class="headerlink" title="1. js判断类型的方法"></a>1. js判断类型的方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. typeof</span><br><span class="line"><span class="comment"># 无法判断引用数据类型</span></span><br><span class="line"></span><br><span class="line">2. Object.prototype.toString()</span><br><span class="line">Object.prototype.toString.call(&#123;&#125;)    // <span class="string">'[object Object]'</span></span><br><span class="line"></span><br><span class="line">3. instanceof</span><br><span class="line"><span class="comment"># 适用于判断Object数据类型</span></span><br><span class="line">var arr = []</span><br><span class="line">arr instanceof Array    // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-call和apply"><a href="#2-call和apply" class="headerlink" title="2. call和apply"></a>2. call和apply</h3><p>一、call 和 apply 都是为了改变某个函数运行时的上下文（context）而存在的，换句话说，就是为了改变函数体内部 this 的指向；</p>
+<blockquote>
+<p>apply和call都能继承另外一个对象的方法和属性；</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">var foo = &#123;</span><br><span class="line">    value: 1</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">bar</span></span>() &#123;</span><br><span class="line">    console.log(this.value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar.call(foo); // 1</span><br><span class="line"></span><br><span class="line">1. call 改变了 this 的指向，指向到 foo</span><br><span class="line">2. bar 函数执行了</span><br></pre></td></tr></table></figure>
+
+<p>二、对于 apply、call 二者而言，作用完全一样，只是接受参数的方式不太一样。例如，有一个函数定义如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var func = <span class="keyword">function</span>(arg1, arg2) &#123;</span><br><span class="line">     </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">就可以通过如下方式来调用：</span><br><span class="line"></span><br><span class="line">func.call(this, arg1, arg2);</span><br><span class="line">func.apply(this, [arg1, arg2]);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>其中 this 是你想指定的上下文，他可以是任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里；</p>
+</blockquote>
+<h4 id="模拟实现call和apply"><a href="#模拟实现call和apply" class="headerlink" title="模拟实现call和apply"></a>模拟实现call和apply</h4><p>可以从以下几点来考虑如何实现</p>
+<ul>
+<li>不传入第一个参数，那么默认为 <code>window</code></li>
+<li>改变了 <code>this</code> 指向，让新的对象可以执行该函数。那么思路是否可以变成给新的对象添加一个函数，然后在执行完以后删除？</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// call</span><br><span class="line">Function.prototype.myCall = <span class="keyword">function</span> (context) &#123;</span><br><span class="line">  var context = context || window</span><br><span class="line">  // 给 context 添加一个属性</span><br><span class="line">  // getValue.call(a, <span class="string">'yilidan'</span>, <span class="string">'24'</span>) =&gt; a.fn = getValue</span><br><span class="line">  context.fn = this</span><br><span class="line">  // 将 context 后面的参数取出来</span><br><span class="line">  var args = [...arguments].slice(1)</span><br><span class="line">  // getValue.call(a, <span class="string">'yilidan'</span>, <span class="string">'24'</span>) =&gt; a.fn(<span class="string">'yilidan'</span>, <span class="string">'24'</span>)</span><br><span class="line">  var result = context.fn(...args)</span><br><span class="line">  // 删除 fn</span><br><span class="line">  delete context.fn</span><br><span class="line">  <span class="built_in">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上就是 <code>call</code> 的思路，<code>apply</code> 的实现也类似</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// apply</span><br><span class="line">Function.prototype.myApply = <span class="keyword">function</span> (context) &#123;</span><br><span class="line">  var context = context || window</span><br><span class="line">  context.fn = this</span><br><span class="line"></span><br><span class="line">  var result</span><br><span class="line">  // 需要判断是否存储第二个参数</span><br><span class="line">  // 如果存在，就将第二个参数展开</span><br><span class="line">  <span class="keyword">if</span> (arguments[1]) &#123;</span><br><span class="line">    result = context.fn(...arguments[1])</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    result = context.fn()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  delete context.fn</span><br><span class="line">  <span class="built_in">return</span> result</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>bind</code> 和其他两个方法作用也是一致的，只是该方法会返回一个函数。并且我们可以通过 <code>bind</code> 实现柯里化。</p>
+<p>同样的，也来模拟实现下 <code>bind</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// <span class="built_in">bind</span></span><br><span class="line">Function.prototype.myBind = <span class="keyword">function</span> (context) &#123;</span><br><span class="line">  <span class="keyword">if</span> (typeof this !== <span class="string">'function'</span>) &#123;</span><br><span class="line">    throw new TypeError(<span class="string">'Error'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  var _this = this</span><br><span class="line">  var args = [...arguments].slice(1)</span><br><span class="line">  // 返回一个函数</span><br><span class="line">  <span class="built_in">return</span> <span class="keyword">function</span> <span class="function"><span class="title">F</span></span>() &#123;</span><br><span class="line">    // 因为返回了一个函数，我们可以 new F()，所以需要判断</span><br><span class="line">    <span class="keyword">if</span> (this instanceof F) &#123;</span><br><span class="line">      <span class="built_in">return</span> new _this(...args, ...arguments)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">return</span> _this.apply(context, args.concat(...arguments))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-对闭包的理解"><a href="#3-对闭包的理解" class="headerlink" title="3. 对闭包的理解"></a>3. 对闭包的理解</h3><blockquote>
+<p>红宝书(p178)上对于闭包的定义：闭包是指有权访问另外一个函数作用域中的变量的函数。</p>
+</blockquote>
+<blockquote>
+<p>MDN 对闭包的定义为：<strong>闭包是指那些能够访问自由变量的函数。</strong> （其中自由变量，指在函数中使用的，但既不是函数参数arguments也不是函数的局部变量的变量，其实就是另外一个函数作用域中的变量。）</p>
+</blockquote>
+<blockquote>
+<p>口述理解：函数 A 返回了一个函数 B，并且函数 B 中使用了函数 A 的变量，函数 B 就被称为闭包。</p>
+</blockquote>
+<p><strong>闭包的表现形式</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. 返回一个函数</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">f1</span></span>() &#123;</span><br><span class="line">  var a = 2</span><br><span class="line">  <span class="keyword">function</span> <span class="function"><span class="title">f2</span></span>() &#123;</span><br><span class="line">    console.log(a);     // 2</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">return</span> f2;</span><br><span class="line">&#125;</span><br><span class="line">var x = f1();</span><br><span class="line">x();</span><br><span class="line"></span><br><span class="line">2. 作为函数参数传递</span><br><span class="line">var a = 1;</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">foo</span></span>()&#123;</span><br><span class="line">  var a = 2;</span><br><span class="line">  <span class="keyword">function</span> <span class="function"><span class="title">baz</span></span>()&#123;</span><br><span class="line">    console.log(a);</span><br><span class="line">  &#125;</span><br><span class="line">  bar(baz);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> bar(fn)&#123;</span><br><span class="line">  // 这就是闭包</span><br><span class="line">  fn();</span><br><span class="line">&#125;</span><br><span class="line">// 输出2，而不是1</span><br><span class="line">foo();</span><br><span class="line"></span><br><span class="line">3. 在定时器、事件监听、Ajax请求、跨窗口通信、Web Workers或者任何异步中，只要使用了回调函数，实际上就是在使用闭包。</span><br><span class="line"></span><br><span class="line">以下的闭包保存的仅仅是window和当前作用域。</span><br><span class="line"></span><br><span class="line">// 定时器</span><br><span class="line">setTimeout(<span class="keyword">function</span> <span class="function"><span class="title">timeHandler</span></span>()&#123;</span><br><span class="line">  console.log(<span class="string">'111'</span>);</span><br><span class="line">&#125;，100)</span><br><span class="line"></span><br><span class="line">// 事件监听</span><br><span class="line">$(<span class="string">'#app'</span>).click(<span class="function"><span class="title">function</span></span>()&#123;</span><br><span class="line">  console.log(<span class="string">'DOM Listener'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">4. IIFE(立即执行函数表达式)创建闭包, 保存了全局作用域window和当前函数的作用域，因此可以全局的变量。</span><br><span class="line"></span><br><span class="line">var a = 2;</span><br><span class="line">(<span class="keyword">function</span> <span class="function"><span class="title">IIFE</span></span>()&#123;</span><br><span class="line">  // 输出2</span><br><span class="line">  console.log(a);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+
+<p><strong>如何解决下面的循环输出问题？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">for</span>(var i = 1; i &lt;= 5; i ++)&#123;</span><br><span class="line">  setTimeout(<span class="keyword">function</span> <span class="function"><span class="title">timer</span></span>()&#123;</span><br><span class="line">    console.log(i)</span><br><span class="line">  &#125;, 0)</span><br><span class="line">&#125;</span><br><span class="line">输出：6,6,6,6,6</span><br></pre></td></tr></table></figure>
+
+<p>为什么会全部输出6？如何改进，让它输出1，2，3，4，5？(方法越多越好)</p>
+<p>因为setTimeout为宏任务，由于JS中单线程eventLoop机制，在主线程同步任务执行完后才去执行宏任务，因此循环结束后setTimeout中的回调才依次执行，但输出i的时候当前作用域没有，往上一级再找，发现了i,此时循环已经结束，i变成了6。因此会全部输出6。</p>
+<p>解决方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">1. 利用IIFE(立即执行函数表达式)当每次<span class="keyword">for</span>循环时，把此时的i变量传递到定时器中；</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(var i = 1;i &lt;= 5;i++)&#123;</span><br><span class="line">  (<span class="keyword">function</span>(j)&#123;</span><br><span class="line">    setTimeout(<span class="keyword">function</span> <span class="function"><span class="title">timer</span></span>()&#123;</span><br><span class="line">      console.log(j)</span><br><span class="line">    &#125;, 0)</span><br><span class="line">  &#125;)(i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 1,2,3,4,5</span><br><span class="line"></span><br><span class="line">2. 给定时器传入第三个参数, 作为timer函数的第一个函数参数；</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(var i=1;i&lt;=5;i++)&#123;</span><br><span class="line">  setTimeout(<span class="keyword">function</span> timer(j)&#123;</span><br><span class="line">    console.log(j)</span><br><span class="line">  &#125;, 0, i)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 1,2,3,4,5</span><br><span class="line"></span><br><span class="line">3. 使用ES6中的<span class="built_in">let</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="built_in">let</span> i = 1; i &lt;= 5; i++)&#123;</span><br><span class="line">  setTimeout(<span class="keyword">function</span> <span class="function"><span class="title">timer</span></span>()&#123;</span><br><span class="line">    console.log(i)</span><br><span class="line">  &#125;,0)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 1,2,3,4,5</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span>使JS发生革命性的变化，让JS有函数作用域变为了块级作用域，用<span class="built_in">let</span>后作用域链不复存在。代码的作用域以块级为单位&#123;&#125;。</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-对原型链的理解"><a href="#4-对原型链的理解" class="headerlink" title="4. 对原型链的理解"></a>4. 对原型链的理解</h3><p><strong>原型对象和构造函数有何关系</strong></p>
+<p>在JavaScript中，每当定义一个函数数据类型(普通函数、类)时候，都会天生自带一个prototype属性，这个属性指向函数的原型对象。</p>
+<p>当函数经过new调用时，这个函数就成为了构造函数，返回一个全新的实例对象，这个实例对象有一个<strong>proto</strong>属性，指向构造函数的原型对象。</p>
+<p><strong>原型链的描述</strong></p>
+<p> JavaScript通过<strong>proto</strong>指向父类对象，直到指向Object对象为止，这样就行程一个原型指向的链条，即原型链；</p>
+<ul>
+<li>对象的 hasOwnProperty() 来检查对象自身中是否含有该属性</li>
+<li>使用 in 检查对象中是否含有某个属性时，如果对象中没有但是原型链中有，也会返回 true</li>
+</ul>
+<h3 id="5-JS如何实现继承"><a href="#5-JS如何实现继承" class="headerlink" title="5. JS如何实现继承"></a>5. JS如何实现继承</h3><p><strong>组合继承</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">function</span> Parent(value) &#123;</span><br><span class="line">	this.val = value</span><br><span class="line">&#125;</span><br><span class="line">Parent.prototype.getValue = <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">	console.log(this.val)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> Child(value) &#123;</span><br><span class="line">	Parent.call(this, value)</span><br><span class="line">&#125;</span><br><span class="line">Child.prototype = new Parent()</span><br><span class="line"></span><br><span class="line">const child = new Child(1)</span><br><span class="line">child.getValue() // 1</span><br><span class="line">child instanceof Parent // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>寄生组合继承（推荐）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 写法一：</span><br><span class="line"><span class="keyword">function</span> Parent(value) &#123;</span><br><span class="line">	this.val = value</span><br><span class="line">&#125;</span><br><span class="line">Parent.prototype.getValue = <span class="function"><span class="title">function</span></span>() &#123;</span><br><span class="line">	console.log(this.val)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> Child(value) &#123;</span><br><span class="line">	Parent.call(this, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype = Object.create(Parent.prototype, &#123;</span><br><span class="line">	constructor: &#123;</span><br><span class="line">		value: Child,</span><br><span class="line">		enumerable: <span class="literal">false</span>,</span><br><span class="line">		writable: <span class="literal">true</span>,</span><br><span class="line">		configurable: <span class="literal">true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">const child = new Child(1)</span><br><span class="line">child.getValue() // 1</span><br><span class="line">child instanceof Parent // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 写法二：</span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Parent5</span></span> () &#123;</span><br><span class="line">    this.name = <span class="string">'parent5'</span>;</span><br><span class="line">    this.play = [1, 2, 3];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">Child5</span></span>() &#123;</span><br><span class="line">    Parent5.call(this);</span><br><span class="line">    this.type = <span class="string">'child5'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Child5.prototype = Object.create(Parent5.prototype);</span><br><span class="line">Child5.prototype.constructor = Child5;</span><br></pre></td></tr></table></figure>
+
+<p><strong>ES6 extends关键字继承（推荐）</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Person &#123;</span><br><span class="line">    constructor(name) &#123;</span><br><span class="line">      this.name = name</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">printName</span></span>() &#123;</span><br><span class="line">      console.log(<span class="string">'父类'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="title">commonFunction</span></span>() &#123;</span><br><span class="line">      console.log(<span class="string">'公共方法'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">  // 继承父类</span><br><span class="line">class Student extends Person&#123;</span><br><span class="line">  constructor(name, score) &#123;</span><br><span class="line">    super(name)</span><br><span class="line">    this.score = score</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="title">printScore</span></span>() &#123;</span><br><span class="line">    console.log(<span class="string">'子类'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> p = new Person(<span class="string">'小红'</span>)</span><br><span class="line"><span class="built_in">let</span> s = new Student(<span class="string">'小明'</span>, 100)</span><br><span class="line">console.log(p.commonMethods===s.commonMethods) // <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-for-of-与-for-in-的区别"><a href="#6-for-of-与-for-in-的区别" class="headerlink" title="6. for of 与 for in 的区别"></a>6. for of 与 for in 的区别</h3><blockquote>
+<p>for…in循环出的是key，for…of循环出的是value</p>
+</blockquote>
+<p>for in </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="built_in">let</span> index <span class="keyword">in</span> aArray)&#123;</span><br><span class="line">  console.log(`<span class="variable">$&#123;aArray[index]&#125;</span>`)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>for of</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(var value of aArray)&#123;</span><br><span class="line">  console.log(value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-new-实现过程"><a href="#7-new-实现过程" class="headerlink" title="7. new 实现过程"></a>7. new 实现过程</h3><ol>
+<li>新生成了一个对象</li>
+<li>链接到原型</li>
+<li>绑定this</li>
+<li>返回新对象</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">create</span></span>() &#123;</span><br><span class="line">    // 创建一个空的对象</span><br><span class="line">    <span class="built_in">let</span> obj = new Object()</span><br><span class="line">    // 获得构造函数</span><br><span class="line">    <span class="built_in">let</span> Con = [].shift.call(arguments)</span><br><span class="line">    // 链接到原型</span><br><span class="line">    obj.__proto__ = Con.prototype</span><br><span class="line">    // 绑定 this，执行构造函数</span><br><span class="line">    <span class="built_in">let</span> result = Con.apply(obj, arguments)</span><br><span class="line">    // 确保 new 出来的是个对象</span><br><span class="line">    <span class="built_in">return</span> typeof result === <span class="string">'object'</span> ? result : obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-指定随机数范围（整数）"><a href="#8-指定随机数范围（整数）" class="headerlink" title="8. 指定随机数范围（整数）"></a>8. 指定随机数范围（整数）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> sum(m,n) &#123;</span><br><span class="line">    <span class="built_in">return</span> Math.floor(Math.random()*(m - n) + n)</span><br><span class="line">&#125;</span><br><span class="line">sum(1, 100)</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-深拷贝与浅拷贝"><a href="#9-深拷贝与浅拷贝" class="headerlink" title="9. 深拷贝与浅拷贝"></a>9. 深拷贝与浅拷贝</h3><p>产生的原因</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: 1</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = a</span><br><span class="line">a.age = 2</span><br><span class="line">console.log(b.age) // 2</span><br></pre></td></tr></table></figure>
+<p>从上述例子中我们可以发现，如果给一个变量赋值一个对象，那么两者的值会是同一个引用，其中一方改变，另一方也会相应改变。</p>
+<p>通常在开发中我们不希望出现这样的问题，我们可以使用浅拷贝来解决这个问题。</p>
+<h4 id="浅拷贝使用"><a href="#浅拷贝使用" class="headerlink" title="浅拷贝使用"></a>浅拷贝使用</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">方法一：Object.assign</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: 1</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = Object.assign(&#123;&#125;, a)</span><br><span class="line">a.age = 2</span><br><span class="line">console.log(b.age) // 1</span><br><span class="line"></span><br><span class="line">方法二：展开运算符 ...</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: 1</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = &#123;...a&#125;</span><br><span class="line">a.age = 2</span><br><span class="line">console.log(b.age) // 1</span><br></pre></td></tr></table></figure>
+
+<p>通常浅拷贝就能解决大部分问题了，但是当我们遇到如下情况就需要使用到深拷贝了</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: 1,</span><br><span class="line">    <span class="built_in">jobs</span>: &#123;</span><br><span class="line">        first: <span class="string">'FE'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = &#123;...a&#125;</span><br><span class="line">a.jobs.first = <span class="string">'native'</span></span><br><span class="line">console.log(b.jobs.first) // native</span><br></pre></td></tr></table></figure>
+
+<p>浅拷贝只解决了第一层的问题，如果接下去的值中还有对象的话，那么就又回到刚开始的话题了，两者享有相同的引用。要解决这个问题，我们需要引入深拷贝。</p>
+<h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><p>这个问题通常可以通过 JSON.parse(JSON.stringify(object)) 来解决。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> a = &#123;</span><br><span class="line">    age: 1,</span><br><span class="line">    <span class="built_in">jobs</span>: &#123;</span><br><span class="line">        first: <span class="string">'FE'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">let</span> b = JSON.parse(JSON.stringify(a))</span><br><span class="line">a.jobs.first = <span class="string">'native'</span></span><br><span class="line">console.log(b.jobs.first) // FE</span><br></pre></td></tr></table></figure>
+<p>但是该方法也是有局限性的：</p>
+<ul>
+<li>会忽略 undefined</li>
+<li>会忽略 symbol</li>
+<li>不能序列化函数</li>
+<li>不能解决循环引用的对象</li>
+</ul>
+<p>在通常情况下，复杂数据都是可以序列化的，所以这个函数可以解决大部分问题，并且该函数是内置函数中处理深拷贝性能最快的。当然如果你的数据中含有以上三种情况下，可以使用 <a href="https://lodash.com/docs##cloneDeep" target="_blank" rel="noopener">lodash 的深拷贝函数</a>。</p>
+<h3 id="10-this的理解"><a href="#10-this的理解" class="headerlink" title="10. this的理解"></a>10. this的理解</h3><p>this 是很多人会混淆的概念，但是其实他一点都不难，你只需要记住几个规则就可以了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">foo</span></span>() &#123;</span><br><span class="line">	console.log(this.a)</span><br><span class="line">&#125;</span><br><span class="line">var a = 1</span><br><span class="line">foo()</span><br><span class="line"></span><br><span class="line">var obj = &#123;</span><br><span class="line">	a: 2,</span><br><span class="line">	foo: foo</span><br><span class="line">&#125;</span><br><span class="line">obj.foo()</span><br><span class="line"></span><br><span class="line">// 以上两者情况 `this` 只依赖于调用函数前的对象，优先级是第二个情况大于第一个情况</span><br><span class="line"></span><br><span class="line">// 以下情况是优先级最高的，`this` 只会绑定在 `c` 上，不会被任何方式修改 `this` 指向</span><br><span class="line">var c = new foo()</span><br><span class="line">c.a = 3</span><br><span class="line">console.log(c.a)</span><br><span class="line"></span><br><span class="line">// 还有种就是利用 call，apply，<span class="built_in">bind</span> 改变 this，这个优先级仅次于 new</span><br></pre></td></tr></table></figure>
+
+<p>以上几种情况明白了，很多代码中的 this 应该就没什么问题了，下面让我们看看箭头函数中的 this</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="function"><span class="title">a</span></span>() &#123;</span><br><span class="line">    <span class="built_in">return</span> () =&gt; &#123;</span><br><span class="line">        <span class="built_in">return</span> () =&gt; &#123;</span><br><span class="line">        	console.log(this)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">console.log(a()()())</span><br></pre></td></tr></table></figure>
+
+<p>箭头函数其实是没有 this 的，这个函数中的 this 只取决于他外面的第一个不是箭头函数的函数的 this。在这个例子中，因为调用 a 符合前面代码中的第一个情况，所以 this 是 window。并且 this 一旦绑定了上下文，就不会被任何代码改变。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/myblog/2020/04/08/git-handle/" rel="next" title="常用的Git命令行操作">
+                <i class="fa fa-chevron-left"></i> 常用的Git命令行操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yilidan</p>
+              <p class="site-description motion-element" itemprop="description">写一些平时码code的一点小收货。。。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/myblog/archives">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yilidan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-js判断类型的方法"><span class="nav-number">1.</span> <span class="nav-text">1. js判断类型的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-call和apply"><span class="nav-number">2.</span> <span class="nav-text">2. call和apply</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模拟实现call和apply"><span class="nav-number">2.1.</span> <span class="nav-text">模拟实现call和apply</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-对闭包的理解"><span class="nav-number">3.</span> <span class="nav-text">3. 对闭包的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-对原型链的理解"><span class="nav-number">4.</span> <span class="nav-text">4. 对原型链的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-JS如何实现继承"><span class="nav-number">5.</span> <span class="nav-text">5. JS如何实现继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-for-of-与-for-in-的区别"><span class="nav-number">6.</span> <span class="nav-text">6. for of 与 for in 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-new-实现过程"><span class="nav-number">7.</span> <span class="nav-text">7. new 实现过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-指定随机数范围（整数）"><span class="nav-number">8.</span> <span class="nav-text">8. 指定随机数范围（整数）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-深拷贝与浅拷贝"><span class="nav-number">9.</span> <span class="nav-text">9. 深拷贝与浅拷贝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#浅拷贝使用"><span class="nav-number">9.1.</span> <span class="nav-text">浅拷贝使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#深拷贝"><span class="nav-number">9.2.</span> <span class="nav-text">深拷贝</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-this的理解"><span class="nav-number">10.</span> <span class="nav-text">10. this的理解</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yilidan</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/myblog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/myblog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/myblog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/myblog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/myblog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/myblog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/myblog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
