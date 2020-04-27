@@ -4,24 +4,96 @@ date: 2020-04-20 16:18:59
 tags:
 ---
 
-### 1. js判断类型的方法
+### js判断类型的方法
 
 ```bash
-
 1. typeof
-# 无法判断引用数据类型
+// 只能判断原始类型（基本数据类型）
+// 判断 null 除外
+
+typeof null     // object
+typeof [] // 'object'
+typeof {} // 'object'
+typeof console.log // 'function'
 
 2. Object.prototype.toString()
 Object.prototype.toString.call({})    // '[object Object]'
 
 3. instanceof
-# 适用于判断Object数据类型
+// 适用于判断对象类型（引用数据类型）
+
+const Person = function() {}
+const p1 = new Person()
+p1 instanceof Person // true
+
 var arr = []
 arr instanceof Array    // true
 
+// 对于原始类型来说，你想直接通过 instanceof 来判断类型是不行的，当然我们还是有办法让 instanceof 判断原始类型的
+
+class PrimitiveString {
+  static [Symbol.hasInstance](x) {
+    return typeof x === 'string'
+  }
+}
+console.log('hello world' instanceof PrimitiveString) // true
 ```
 
-### 2. call和apply
+### == 和 === 有什么区别？
+
+> ==  如果对比双方的类型不一样的话，就会进行类型转换
+
+> === 判断两者类型和值是否都相同
+
+== 判断流程
+1. 首先会判断两者类型是否相同。相同的话就是比大小了
+2. 类型不相同的话，那么就会进行类型转换
+3. 会先判断是否在对比 `null` 和 `undefined`，是的话就会返回 `true`
+4. 判断两者类型是否为 `string` 和 `number`，是的话就会将字符串转换为 `number`
+5. 判断其中一方是否为 `boolean`，是的话就会把 `boolean` 转为 `number` 再进行判断
+6. 判断其中一方是否为 `object` 且另一方为 `string`、`number` 或者 `symbol`，就调用 `object` 的valueOf()方法，用得到的基本类型值按照前面的规则进行比较，如果 `object` 没有valueOf()方法，则调用 toString()
+7. 如果有一个操作数是`NaN`，则相等操作符返回 false
+
+```bash
+'1' == { name: 'yck' }
+        ↓
+'1' == '[object Object]'
+```
+
+> 面试题：[] == ![]
+
+```bash
+1. [] == ![]    // true
+
+根据运算符优先级 ，！ 的优先级是大于 == 的，所以先会执行 ![]
+！可将变量转换成boolean类型，null、undefined、NaN以及空字符串('')取反都为true，其余都为false。
+!null == true
+!undefined == true
+!NaN == true
+!'' == true
+
+![] == false
+!{} == false
+
+总结：
+[].toString() ->  '' (返回的是空字符串)，也就是 [] == 0 相当于 '' == 0
+
+[] == ! []   ->   [] == false  ->  [] == 0  ->   '' == 0   ->  0 == 0   ->  true
+
+同理：{} == !{}     // true
+{}.toString() ->  NaN(返回的是NaN)
+
+{} == ! {}   ->   {} == false  ->  {} == 0  ->   NaN == 0    ->  false
+
+2. 0 == +[]
+// + 操作符是转为Number类型
+
+0 == +[]    ->    0 == 0    ->    true
+
+0 == +{}    ->    0 == NaN  ->    false
+```
+
+### call和apply
 
 一、call 和 apply 都是为了改变某个函数运行时的上下文（context）而存在的，换句话说，就是为了改变函数体内部 this 的指向；
 
@@ -131,7 +203,7 @@ Function.prototype.myBind = function (context) {
 
 
 
-### 3. 对闭包的理解
+### 对闭包的理解
 
 > 红宝书(p178)上对于闭包的定义：闭包是指有权访问另外一个函数作用域中的变量的函数。
 
@@ -250,7 +322,7 @@ let使JS发生革命性的变化，让JS有函数作用域变为了块级作用�
 
 ```
 
-### 4. 对原型链的理解
+### 对原型链的理解
 
 **原型对象和构造函数有何关系**
 
@@ -265,7 +337,7 @@ let使JS发生革命性的变化，让JS有函数作用域变为了块级作用�
 - 对象的 hasOwnProperty() 来检查对象自身中是否含有该属性
 - 使用 in 检查对象中是否含有某个属性时，如果对象中没有但是原型链中有，也会返回 true
 
-### 5. JS如何实现继承
+### JS如何实现继承
 
 **组合继承**
 
@@ -366,7 +438,7 @@ console.log(p.commonMethods===s.commonMethods) // true
   
 ```
 
-### 6. for of 与 for in 的区别
+### for of 与 for in 的区别
 
 > for...in循环出的是key，for...of循环出的是value
 
@@ -384,7 +456,7 @@ for of
   }
 ```
 
-### 7. new 实现过程
+### new 实现过程
 1. 新生成了一个对象
 2. 链接到原型
 3. 绑定this
@@ -405,7 +477,7 @@ function create() {
 }
 ```
 
-### 8. 指定随机数范围（整数）
+### 指定随机数范围（整数）
 
 ```bash
 function sum(m,n) {
@@ -414,7 +486,7 @@ function sum(m,n) {
 sum(1, 100)
 ```
 
-### 9. 深拷贝与浅拷贝
+### 深拷贝与浅拷贝
 
 产生的原因
 
@@ -493,7 +565,7 @@ console.log(b.jobs.first) // FE
 
 在通常情况下，复杂数据都是可以序列化的，所以这个函数可以解决大部分问题，并且该函数是内置函数中处理深拷贝性能最快的。当然如果你的数据中含有以上三种情况下，可以使用 [lodash 的深拷贝函数](https://lodash.com/docs##cloneDeep)。
 
-### 10. this的理解
+### this的理解
 
 this 是很多人会混淆的概念，但是其实他一点都不难，你只需要记住几个规则就可以了。
 
@@ -537,5 +609,78 @@ console.log(a()()())
 
 
 
+### Vue的生命周期
+
+```bash
+new Vue()
+// 新建Vue实例
+
+beforeCreate    
+// 是获取不到 props 或者 data 中的数据的，因为这些数据的初始化都在 initState 中。
+
+created
+// 可以访问到之前不能访问到的数据
+
+beforeMount
+// 开始创建 VDOM (Virtual DOM)
+
+mounted
+// 将 VDOM 渲染为真实 DOM 并且渲染数据
+
+beforeUpdate
+// 在数据更新前调用
+
+updated
+// 在数据更新后调用
+
+使用keep-alive的情况下
+// 用 keep-alive 包裹的组件在切换时不会进行销毁，而是缓存到内存中并执行 deactivated 钩子函数，命中缓存渲染后会执行 actived 钩子函数。
+
+beforeDestroy
+// 销毁组件的钩子函数，适合移除事件、定时器等等
+
+destroyed
+// 销毁完毕
+```
+
+### Vue中computed和watch的区别
+
+> computed 是计算属性，依赖其他属性计算值，并且 computed 的值有缓存，只有当计算值变化才会返回内容。
+
+> watch 监听到值的变化就会执行回调，在回调中可以进行一些逻辑操作
+
+一般来说需要依赖别的属性来动态获得值的时候可以使用 computed
+
+对于监听到值的变化需要做一些复杂业务逻辑的情况可以使用 watch。
+
+
+
+### Vue中响应式的原理
+
+Vue 内部使用了 `Object.defineProperty()` 来实现数据响应式，通过这个函数可以监听到 `set` 和 `get` 的事件。
+
+
+
+### 发布-订阅模式
+
+> 发布-订阅模式也叫做观察者模式。通过一对一或者一对多的依赖关系，当对象发生改变时，订阅方都会收到通知
+
+发布订阅模式核心是 `addEventListener` 
+
+在 Vue 中，如何实现响应式也是使用了该模式。对于需要实现响应式的对象来说，在 get 的时候会进行依赖收集，当改变了对象的属性时，就会触发派发更新。
+
+
+
+### 什么是BFC
+
+> 块格式化上下文（Block Formatting Context，BFC） 是Web页面的可视化CSS渲染的一部分，是块盒子的布局过程发生的区域，也是浮动元素与其他元素交互的区域。
+
+如何创建BFC
+
+- 根元素
+- 浮动元素（float 属性不为 none）
+- position 为 absolute 或 fixed
+- overflow 不为 visible 的块元素
+- display 为 inline-block, table-cell, table-caption
 
 
