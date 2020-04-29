@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="WOW">
 <meta property="og:description" content="深度选择器1. stylus, css使用方法：1.parent &gt;&gt;&gt; .child&amp;#123;&amp;#125; 2. less使用方法：123.parent &amp;#123;  &#x2F;deep&#x2F; .child&amp;#123;&amp;#125;&amp;#125; 3. sass使用方法：1.parent &#x2F;deep&#x2F; .child&amp;#123;&amp;#125;  watch深度监听用法监听对象属性的变化（方式一">
 <meta property="article:published_time" content="2020-03-05T16:02:02.000Z">
-<meta property="article:modified_time" content="2020-04-27T10:14:05.753Z">
+<meta property="article:modified_time" content="2020-04-29T09:23:41.935Z">
 <meta property="article:author" content="yilidan">
 <meta name="twitter:card" content="summary">
 
@@ -308,6 +308,8 @@
 
 <h3 id="watch深度监听用法"><a href="#watch深度监听用法" class="headerlink" title="watch深度监听用法"></a>watch深度监听用法</h3><h5 id="监听对象属性的变化（方式一）"><a href="#监听对象属性的变化（方式一）" class="headerlink" title="监听对象属性的变化（方式一）"></a>监听对象属性的变化（方式一）</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">obj: &#123;</span><br><span class="line">  <span class="function"><span class="title">handler</span></span>() &#123;</span><br><span class="line">      console.log(obj.a)</span><br><span class="line">  &#125;,</span><br><span class="line">  immediate: <span class="literal">true</span>,</span><br><span class="line">  deep: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h4 id="监听对象属性的变化（方法二）"><a href="#监听对象属性的变化（方法二）" class="headerlink" title="监听对象属性的变化（方法二）"></a>监听对象属性的变化（方法二）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'obj.a'</span>: &#123;</span><br><span class="line">    <span class="function"><span class="title">handler</span></span>()&#123;</span><br><span class="line">        console.log(obj.a)</span><br><span class="line">    &#125;,</span><br><span class="line">    immediate: <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line">1. <span class="string">'immediate'</span>：默认触发handler方法</span><br><span class="line">2. <span class="string">'deep'</span>: 深度监听对象中的属性</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
 
 <h3 id="keep-alive的使用"><a href="#keep-alive的使用" class="headerlink" title="keep-alive的使用"></a>keep-alive的使用</h3><blockquote>
 <p>使用keep-alive缓存之后，页面的路由不走created和mounted，你可以在activted中调用数据；</p>
