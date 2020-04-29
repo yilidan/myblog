@@ -10,6 +10,8 @@ git 代码提交
 3. git commit -m '备注'	添加文件到git仓库
 4. git push	提交到git仓库
 
+<!-- more -->
+
 git 切换分支
 1. git pull
 2. git checkout (分支名称)

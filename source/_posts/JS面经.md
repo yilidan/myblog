@@ -39,6 +39,8 @@ class PrimitiveString {
 console.log('hello world' instanceof PrimitiveString) // true
 ```
 
+<!-- more -->
+
 ### == 和 === 有什么区别？
 
 > ==  如果对比双方的类型不一样的话，就会进行类型转换

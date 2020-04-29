@@ -33,6 +33,8 @@ function is_weibo(){
 }
 ```
 
+<!-- more -->
+
 #### 判断是否为移动端
 ``` bash
 if (/Android|Windows Phone|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {

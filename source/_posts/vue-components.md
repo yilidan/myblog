@@ -32,6 +32,8 @@ Vue.prototype.$loading = loading
 
 ```
 
+<!-- more -->
+
 ##### 在store/index.js中加上控制显示隐藏的方法
 
 ```bash

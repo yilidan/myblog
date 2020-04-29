@@ -43,6 +43,8 @@ obj: {
 2. 'deep': 深度监听对象中的属性
 ```
 
+<!-- more -->
+
 ### keep-alive的使用
 > 使用keep-alive缓存之后，页面的路由不走created和mounted，你可以在activted中调用数据；
 
