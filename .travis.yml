@@ -1,0 +1,18 @@
+sudo: false
+language: node_js
+node_js:
+  - 12 # 使用12的LTS版本
+cache: npm
+branches:
+  only:
+    - master # 只监听master分支的push
+script:
+  - hexo generate # 自动化构建的脚本
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    branch: master
+  local-dir: public
