@@ -1,7 +1,7 @@
 ---
 title: React Hooks基础
 date: 2021-06-22 17:26:00
-tags: react
+tags: react hooks
 ---
 
 **回顾class组件的问题**
