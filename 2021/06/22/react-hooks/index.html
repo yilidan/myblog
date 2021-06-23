@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/myblog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/myblog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/myblog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/myblog/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/myblog/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/myblog/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/myblog/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="react," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="回顾class组件的问题  大型组件很难拆分和重构，很难测试（即class不易拆分） 相同业务逻辑，分散到各个方法中，逻辑混乱 复用逻辑变得复杂，如HOC、Render Prop   State Hook函数组件是一个纯函数，执行完即销毁，无法存储state，需要State Hook，即把state功能”钩“到纯函数中 Effect Hook1234567891011121314151617181">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React Hooks基础">
+<meta property="og:url" content="http://yoursite.com/2021/06/22/react-hooks/index.html">
+<meta property="og:site_name" content="WOW">
+<meta property="og:description" content="回顾class组件的问题  大型组件很难拆分和重构，很难测试（即class不易拆分） 相同业务逻辑，分散到各个方法中，逻辑混乱 复用逻辑变得复杂，如HOC、Render Prop   State Hook函数组件是一个纯函数，执行完即销毁，无法存储state，需要State Hook，即把state功能”钩“到纯函数中 Effect Hook1234567891011121314151617181">
+<meta property="article:published_time" content="2021-06-22T17:26:00.000Z">
+<meta property="article:modified_time" content="2021-06-23T05:47:34.629Z">
+<meta property="article:author" content="yilidan">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/myblog/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2021/06/22/react-hooks/"/>
+
+
+
+
+
+  <title>React Hooks基础 | WOW</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/myblog/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WOW</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">时间就是金钱，我的朋友！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/myblog/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/myblog/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/myblog/archives" rel="section">
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/myblog/2021/06/22/react-hooks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yilidan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/myblog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WOW">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">React Hooks基础</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2021-06-22T17:26:00+00:00">
+                2021-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><strong>回顾class组件的问题</strong></p>
+<ul>
+<li>大型组件很难拆分和重构，很难测试（即class不易拆分）</li>
+<li>相同业务逻辑，分散到各个方法中，逻辑混乱</li>
+<li>复用逻辑变得复杂，如HOC、Render Prop</li>
+</ul>
+<hr>
+<h3 id="State-Hook"><a href="#State-Hook" class="headerlink" title="State Hook"></a>State Hook</h3><p>函数组件是一个纯函数，执行完即销毁，无法存储state，需要State Hook，即把state功能”钩“到纯函数中</p>
+<h3 id="Effect-Hook"><a href="#Effect-Hook" class="headerlink" title="Effect Hook"></a>Effect Hook</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Index</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 模拟class组价中 componentDidMount 和 componentDidUpdate</span></span><br><span class="line">	useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'在此发送一个ajax请求'</span>)</span><br><span class="line">	&#125;)</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 模拟class组件中 componentDidMount 挂载</span></span><br><span class="line">	useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'加载完了'</span>)</span><br><span class="line">	&#125;, []) <span class="comment">// 第二个参数是 []（不依赖于任何 state）</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 模拟class组件中 componetDidUpdate 更新</span></span><br><span class="line">	useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'更新了'</span>)</span><br><span class="line">	&#125;, [para1, para2]) <span class="comment">// 第二个参数是依赖 state</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 模拟class组件中 componentWillUnmount</span></span><br><span class="line">	useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">let</span> timerId = <span class="built_in">window</span>.setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="built_in">Date</span>.now())</span><br><span class="line">		&#125;, <span class="number">1000</span>)</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 返回一个函数</span></span><br><span class="line">		<span class="comment">// 模拟class组件 componetWillUnmount 销毁</span></span><br><span class="line">		<span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">			<span class="built_in">window</span>.clearInterval(timerId)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;, [])</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">		<span class="tag">&lt;<span class="name">div</span>&gt;</span>Index test<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Index</span><br></pre></td></tr></table></figure>
+
+<h3 id="所有的定时任务或全局事件绑定，一定要在组件销毁时，清除定时任务或解绑全局事件，防止内存泄漏"><a href="#所有的定时任务或全局事件绑定，一定要在组件销毁时，清除定时任务或解绑全局事件，防止内存泄漏" class="headerlink" title="*所有的定时任务或全局事件绑定，一定要在组件销毁时，清除定时任务或解绑全局事件，防止内存泄漏"></a><strong>*所有的定时任务或全局事件绑定，一定要在组件销毁时，清除定时任务或解绑全局事件，防止内存泄漏</strong></h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo </span></span><br><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">mouseMoveHandler</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">	    setX(event.clientX)</span><br><span class="line">	    setY(event.clientY)</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 绑定事件</span></span><br><span class="line">	<span class="built_in">document</span>.body.addEventListener(<span class="string">'mousemove'</span>, mouseMoveHandler)</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 解绑事件</span></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">document</span>.body.removeEventListener(<span class="string">'mousemove'</span>, mouseMoveHandler)</span><br><span class="line">&#125;, [])</span><br></pre></td></tr></table></figure>
+
+<p><strong>useEffect让纯函数有了副作用</strong></p>
+<ul>
+<li>默认情况下，执行纯函数，输入参数，返回结果，无副作用</li>
+<li>所谓副作用，就是对函数之外造成影响，如设置全局定时任务</li>
+<li>而组件需要副作用，所以有需要useEffect”钩“到纯函数中</li>
+</ul>
+<p><strong>useEffect中返回函数callbackFn</strong></p>
+<ul>
+<li>useEffect依赖[]，组件销毁时执行fn，等同于WillUnmount</li>
+<li>useEffect无依赖或依赖[a, b]，组件更新时执行fn</li>
+<li>即，下一次执行useEffect之前，就会执行fn，无论更新或卸载</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="comment">// DidMount 和 DidUpdate</span></span><br><span class="line">useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`开始监听 <span class="subst">$&#123;friendId&#125;</span> 在线状态`</span>)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 【特别注意】</span></span><br><span class="line">  <span class="comment">// 此处并不完全等同于 WillUnMount</span></span><br><span class="line">  <span class="comment">// props 发生变化，即更新，也会执行结束监听</span></span><br><span class="line">  <span class="comment">// 准确的说：返回的函数，会在下一次 effect 执行之前，被执行</span></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`结束监听 <span class="subst">$&#123;friendId&#125;</span> 在线状态`</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="useRef-使用"><a href="#useRef-使用" class="headerlink" title="useRef 使用"></a>useRef 使用</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; useRef, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UseRef</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> btnRef = useRef(<span class="literal">null</span>) <span class="comment">// 初始值</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">// const numRef = useRef(0)</span></span><br><span class="line">	<span class="comment">// numRef.current</span></span><br><span class="line">	</span><br><span class="line">	useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	  <span class="built_in">console</span>.log(btnRef.current) <span class="comment">// DOM 节点</span></span><br><span class="line">	&#125;, [])</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">	  <span class="tag">&lt;<span class="name">button</span> <span class="attr">ref</span>=<span class="string">&#123;btnRef&#125;</span>&gt;</span>click<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> UseRef</span><br></pre></td></tr></table></figure>
+
+<h3 id="useContext-使用"><a href="#useContext-使用" class="headerlink" title="useContext 使用"></a>useContext 使用</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo 主题颜色传递</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; useContext &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 主题颜色</span></span><br><span class="line"><span class="keyword">const</span> themes = &#123;</span><br><span class="line">    light: &#123;</span><br><span class="line">        foreground: <span class="string">'#000'</span>,</span><br><span class="line">        background: <span class="string">'#eee'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    dark: &#123;</span><br><span class="line">        foreground: <span class="string">'#fff'</span>,</span><br><span class="line">        background: <span class="string">'#222'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 Context</span></span><br><span class="line"><span class="keyword">const</span> ThemeContext = React.createContext(themes.light) <span class="comment">// 初始值</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ThemeButton</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> theme = useContext(ThemeContext)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">button</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">background:</span> <span class="attr">theme.background</span>, <span class="attr">color:</span> <span class="attr">theme.foreground</span> &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="xml">        hello world</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Toolbar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">ThemeButton</span>&gt;</span><span class="tag">&lt;/<span class="name">ThemeButton</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">ThemeContext.Provider</span> <span class="attr">value</span>=<span class="string">&#123;themes.dark&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Toolbar</span>&gt;</span><span class="tag">&lt;/<span class="name">Toolbar</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">ThemeContext.Provider</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App</span><br></pre></td></tr></table></figure>
+
+<h3 id="useReducer-使用"><a href="#useReducer-使用" class="headerlink" title="useReducer 使用"></a>useReducer 使用</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; useReducer &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initialState = &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reducer = <span class="function">(<span class="params">state, action</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'increment'</span>:</span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">count</span>: state.count + <span class="number">1</span> &#125;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">'decrement'</span>:</span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">count</span>: state.count - <span class="number">1</span> &#125;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">return</span> state</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 很像 const [count, setCount] = useState(0)</span></span><br><span class="line">    <span class="keyword">const</span> [state, dispatch] = useReducer(reducer, initialState)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        count: &#123;state.count&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> dispatch(&#123; type: 'increment' &#125;)&#125;&gt;increment<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> dispatch(&#123; type: 'decrement' &#125;)&#125;&gt;decrement<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App</span><br></pre></td></tr></table></figure>
+
+<p><strong>useReducer和redux的区别</strong></p>
+<ul>
+<li>useReducer是useState的代替方案，用于state复杂变化</li>
+<li>useReducer是单个组件状态管理，组件通讯还需要props</li>
+<li>redux是全局状态管理，多组件共享数据</li>
+</ul>
+<h3 id="useMemo-使用"><a href="#useMemo-使用" class="headerlink" title="useMemo 使用"></a>useMemo 使用</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; useState, memo, useMemo &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 子组件</span></span><br><span class="line"><span class="comment">// function Child(&#123; userInfo &#125;) &#123;</span></span><br><span class="line"><span class="comment">//     console.log('Child render...', userInfo)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//     return &lt;div&gt;</span></span><br><span class="line"><span class="comment">//         &lt;p&gt;This is Child &#123;userInfo.name&#125; &#123;userInfo.age&#125;&lt;/p&gt;</span></span><br><span class="line"><span class="comment">//     &lt;/div&gt;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"><span class="comment">// 类似 class PureComponent ，对 props 进行浅层比较</span></span><br><span class="line"><span class="comment">// 子组件需要用memo函数封装</span></span><br><span class="line"><span class="keyword">const</span> Child = memo(<span class="function">(<span class="params">&#123; userInfo &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Child render...'</span>, userInfo)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>This is Child &#123;userInfo.name&#125; &#123;userInfo.age&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 父组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Parent render...'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">const</span> [name, setName] = useState(<span class="string">'双越老师'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// const userInfo = &#123; name, age: 20 &#125;</span></span><br><span class="line">    <span class="comment">// 用 useMemo 缓存数据，有依赖</span></span><br><span class="line">    <span class="keyword">const</span> userInfo = useMemo(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; name, <span class="attr">age</span>: <span class="number">21</span> &#125;</span><br><span class="line">    &#125;, [name])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line">        &lt;p&gt;</span><br><span class="line">            count is &#123;count&#125;</span><br><span class="line">            &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;click&lt;/button&gt;</span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Child</span> <span class="attr">userInfo</span>=<span class="string">&#123;userInfo&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Child</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App</span><br></pre></td></tr></table></figure>
+
+<p><strong>useMemo总结</strong></p>
+<ul>
+<li>React默认会更新所有子组件</li>
+<li>class组件使用shouldComponentUpdate和PureComponent做优化</li>
+<li>Hooks中使用useMemo，但优化的原理是相同的，子组件需要用memo函数封装</li>
+</ul>
+<h3 id="useCallback使用"><a href="#useCallback使用" class="headerlink" title="useCallback使用"></a>useCallback使用</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; useState, memo, useMemo, useCallback &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 子组件，memo 相当于 PureComponent</span></span><br><span class="line"><span class="keyword">const</span> Child = memo(<span class="function">(<span class="params">&#123; userInfo, onChange &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Child render...'</span>, userInfo)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>This is Child &#123;userInfo.name&#125; &#123;userInfo.age&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">input</span> <span class="attr">onChange</span>=<span class="string">&#123;onChange&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">input</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 父组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Parent render...'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">const</span> [name, setName] = useState(<span class="string">'双越老师'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用 useMemo 缓存数据</span></span><br><span class="line">    <span class="keyword">const</span> userInfo = useMemo(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; name, <span class="attr">age</span>: <span class="number">21</span> &#125;</span><br><span class="line">    &#125;, [name])</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用 useCallback 缓存函数</span></span><br><span class="line">    <span class="keyword">const</span> onChange = useCallback(<span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(e.target.value)</span><br><span class="line">    &#125;, [])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line">        &lt;p&gt;</span><br><span class="line">            count is &#123;count&#125;</span><br><span class="line">           &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;click&lt;/button&gt;</span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">Child</span> <span class="attr">userInfo</span>=<span class="string">&#123;userInfo&#125;</span> <span class="attr">onChange</span>=<span class="string">&#123;onChange&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Child</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App</span><br></pre></td></tr></table></figure>
+
+<p><strong>useCallback总结</strong></p>
+<ul>
+<li>useMemo缓存数据</li>
+<li>useCallback缓存函数</li>
+<li>两者都是React Hooks的常见优化策略</li>
+</ul>
+<hr>
+<h3 id="自定义-Hook"><a href="#自定义-Hook" class="headerlink" title="自定义 Hook"></a>自定义 Hook</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 封装 axios 发送网络请求的自定义 Hook</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useAxios</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">false</span>)</span><br><span class="line">	<span class="keyword">const</span> [data, setData] = useState()</span><br><span class="line">	<span class="keyword">const</span> [error, setError] = useState()</span><br><span class="line">	</span><br><span class="line">	useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	  <span class="comment">// 利用 axios 发送网络请求</span></span><br><span class="line">		setLoading(<span class="literal">true</span>)</span><br><span class="line">		axios.get(url) <span class="comment">// 发送一个 get 请求</span></span><br><span class="line">	    .then(<span class="function"><span class="params">res</span> =&gt;</span> setData(res))</span><br><span class="line">	    .catch(<span class="function"><span class="params">err</span> =&gt;</span> setError(err))</span><br><span class="line">	    .finally(<span class="function"><span class="params">()</span> =&gt;</span> setLoading(<span class="literal">false</span>))</span><br><span class="line">	&#125;, [url])</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> [loading, data, error]</span><br><span class="line">&#125;</span><br><span class="line">	</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> useAxios</span><br></pre></td></tr></table></figure>
+
+<p><strong>自定义Hook总结</strong></p>
+<ul>
+<li>本质是一个函数，以use开头（重要）</li>
+<li>内部正常使用useState，useEffect或者其他Hooks</li>
+<li>自定义返回结果，格式不限</li>
+</ul>
+<p>第三方Hooks</p>
+<ol>
+<li><a href="https://nikgraf.github.io/react-hooks" target="_blank" rel="noopener">https://nikgraf.github.io/react-hooks</a></li>
+<li><a href="https://github.com/umijs/hooks" target="_blank" rel="noopener">https://github.com/umijs/hooks</a></li>
+</ol>
+<hr>
+<h3 id="Hooks使用规范"><a href="#Hooks使用规范" class="headerlink" title="Hooks使用规范"></a>Hooks使用规范</h3><ol>
+<li><p>只能用于React函数组件和自定义Hook中，其他地方不可以；</p>
+</li>
+<li><p>只能用于顶层代码，不能在循环、判断中使用Hooks；</p>
+</li>
+<li><p>eslint插件eslint-plugin-react-hooks可以帮助你，（CRA脚手架是有配置的）；</p>
+ <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ESLint 配置文件</span></span><br><span class="line"><span class="comment">// eslint-plugin-react-hooks</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="string">"plugins"</span>: [</span><br><span class="line">		<span class="comment">// ...此处省略 N 行...</span></span><br><span class="line">		<span class="string">"react-hooks"</span></span><br><span class="line">	],</span><br><span class="line">	<span class="string">"rules"</span>: &#123;</span><br><span class="line">		<span class="comment">// ...此处省略 N 行...</span></span><br><span class="line">		<span class="string">"react-hooks/rules-of-hooks"</span>: <span class="string">"error"</span>,  <span class="comment">// 检查 Hook 的规则</span></span><br><span class="line">		<span class="string">"react-hooks/exhaustive-deps"</span>: <span class="string">"warn"</span>   <span class="comment">// 检查 effect 的依赖</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h3 id="关于Hooks调用顺序"><a href="#关于Hooks调用顺序" class="headerlink" title="关于Hooks调用顺序"></a>关于Hooks调用顺序</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Teach</span>(<span class="params">&#123; couseName &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 函数组件，纯函数，执行完即销毁</span></span><br><span class="line">  <span class="comment">// 所以，无论组件初始化（render）还是组件更新（re-render）</span></span><br><span class="line">  <span class="comment">// 都会重新执行一次这个函数，获取最新的组件</span></span><br><span class="line">  <span class="comment">// 这一点和 class 组件不一样，class组价是有实例的，函数组件没有实例</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// render: 初始化 state 的值 '张三'</span></span><br><span class="line">  <span class="comment">// re-render: 读取 state 的值 '张三'</span></span><br><span class="line">  <span class="keyword">const</span> [studentName, setStudentName] = useState(<span class="string">'张三'</span>)</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 错误使用</span></span><br><span class="line">  <span class="comment">// if (couseName) &#123;</span></span><br><span class="line">  <span class="comment">//     const [studentName, setStudentName] = useState('张三')</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// render: 初始化 state 的值 '双越'</span></span><br><span class="line">  <span class="comment">// re-render: 读取 state 的值 '双越'</span></span><br><span class="line">  <span class="keyword">const</span> [teacherName, setTeacherName] = useState(<span class="string">'双越'</span>)</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 错误使用</span></span><br><span class="line">  <span class="comment">// if (couseName) &#123;</span></span><br><span class="line">  <span class="comment">//     useEffect(() =&gt; &#123;</span></span><br><span class="line">  <span class="comment">//         // 模拟学生签到</span></span><br><span class="line">  <span class="comment">//         localStorage.setItem('name', studentName)</span></span><br><span class="line">  <span class="comment">//     &#125;)</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// render: 添加 effect 函数</span></span><br><span class="line">  <span class="comment">// re-render: 替换 effect 函数（内部的函数也会重新定义）</span></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 模拟学生签到</span></span><br><span class="line">      localStorage.setItem(<span class="string">'name'</span>, studentName)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// render: 添加 effect 函数</span></span><br><span class="line">  <span class="comment">// re-render: 替换 effect 函数（内部的函数也会重新定义）</span></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 模拟开始上课</span></span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;teacherName&#125;</span> 开始上课，学生 <span class="subst">$&#123;studentName&#125;</span>`</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      课程：&#123;couseName&#125;，</span></span><br><span class="line"><span class="xml">      讲师：&#123;teacherName&#125;，</span></span><br><span class="line"><span class="xml">      学生：&#123;studentName&#125;</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> Teach</span><br></pre></td></tr></table></figure>
+
+<p><strong>Hooks调用顺序必须保持一致</strong></p>
+<ul>
+<li>无论是render还是re-render，Hooks调用顺序必须一致</li>
+<li>如果Hooks出现在循环、判断里，则无法保证顺序一致</li>
+<li>Hooks严重依赖于调用顺序！重要！</li>
+</ul>
+<hr>
+<h3 id="class组件逻辑复用"><a href="#class组件逻辑复用" class="headerlink" title="class组件逻辑复用"></a>class组件逻辑复用</h3><ul>
+<li>高阶组价HOC<ol>
+<li>组件层级嵌套过多，不易渲染，不易调试；</li>
+<li>HOC会劫持props，必须严格规范，容易出现疏漏；</li>
+</ol>
+</li>
+<li>Render Prop<ol>
+<li>学习成本高，不易理解；</li>
+<li>只能传递纯函数，而默认情况下纯函数功能有限；</li>
+</ol>
+</li>
+</ul>
+<hr>
+<ul>
+<li>Mixins早已废弃<ol>
+<li>变量作用域来源不清；</li>
+<li>属性重名；</li>
+<li>Mixins引入过多会导致顺序冲突；</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="Hooks组件逻辑复用好处"><a href="#Hooks组件逻辑复用好处" class="headerlink" title="Hooks组件逻辑复用好处"></a><strong>Hooks组件逻辑复用好处</strong></h3><ul>
+<li>完全符合Hooks原有规则，没有其他要求，易理解记忆</li>
+<li>变量作用域明确</li>
+<li>不会产生组件嵌套</li>
+</ul>
+<hr>
+<h3 id="React-Hooks注意事项（坑点）"><a href="#React-Hooks注意事项（坑点）" class="headerlink" title="React Hooks注意事项（坑点）"></a>React Hooks注意事项（坑点）</h3><ul>
+<li>useState初始化值，只有第一次有效</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 子组件</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params">&#123; userInfo &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// render: 初始化 state</span></span><br><span class="line">  <span class="comment">// re-render: 只恢复初始化的 state 值，不会再重新设置新的值</span></span><br><span class="line">  <span class="comment">//            只能用 setName 修改</span></span><br><span class="line">  <span class="keyword">const</span> [ name, setName ] = useState(userInfo.name)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>Child, props name: &#123;userInfo.name&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span> // 双越 click之后：慕课网</span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>Child, state name: &#123;name&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span>          // 双越 click之后：双越</span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [name, setName] = useState(<span class="string">'双越'</span>)</span><br><span class="line">  <span class="keyword">const</span> userInfo = &#123; name &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line">      &lt;div&gt;</span><br><span class="line">          Parent &amp;nbsp;</span><br><span class="line">          &lt;button onClick=&#123;() =&gt; setName('慕课网')&#125;&gt;setName&lt;/button&gt;</span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;<span class="name">Child</span> <span class="attr">userInfo</span>=<span class="string">&#123;userInfo&#125;/</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>useEffect内部不能修改state</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> React, &#123; useState, useRef, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">UseEffectChangeState</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟 DidMount</span></span><br><span class="line">    <span class="comment">// const countRef = useRef(0) // 使用useRef来解决这个问题</span></span><br><span class="line">    useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'useEffect...'</span>, count)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定时任务</span></span><br><span class="line">        <span class="keyword">const</span> timer = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// console.log('setInterval...', countRef.current)</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">'setInterval...'</span>, count) <span class="comment">// 打印一直是0</span></span><br><span class="line">            setCount(count + <span class="number">1</span>)</span><br><span class="line">            <span class="comment">// setCount(++countRef.current)</span></span><br><span class="line">        &#125;, <span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 清除定时任务</span></span><br><span class="line">        <span class="keyword">return</span> <span class="function"><span class="params">()</span> =&gt;</span> clearTimeout(timer)</span><br><span class="line">    &#125;, []) <span class="comment">// 依赖为 []</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 依赖为 [] 时： re-render 不会重新执行 effect 函数</span></span><br><span class="line">    <span class="comment">// 没有依赖：re-render 会重新执行 effect 函数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>count: &#123;count&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span> <span class="comment">//这是输出一直是 1 </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> UseEffectChangeState</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>useEffect可能出现死循环，useEffect第二个参数不能依赖引用类型，如Object，Array等，否则会出现死循环</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// demo</span></span><br><span class="line"><span class="keyword">import</span> &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 封装 axios 发送网络请求的自定义 Hook</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">useAxios</span>(<span class="params">url, config=&#123;&#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [loading, setLoading] = useState(<span class="literal">false</span>)</span><br><span class="line">  <span class="keyword">const</span> [data, setData] = useState()</span><br><span class="line">  <span class="keyword">const</span> [error, setError] = useState()</span><br><span class="line"></span><br><span class="line">  useEffect(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// 利用 axios 发送网络请求</span></span><br><span class="line">      setLoading(<span class="literal">true</span>)</span><br><span class="line">      axios(url, config) <span class="comment">// 发送一个 get 请求</span></span><br><span class="line">          .then(<span class="function"><span class="params">res</span> =&gt;</span> setData(res))</span><br><span class="line">          .catch(<span class="function"><span class="params">err</span> =&gt;</span> setError(err))</span><br><span class="line">          .finally(<span class="function"><span class="params">()</span> =&gt;</span> setLoading(<span class="literal">false</span>))</span><br><span class="line">  &#125;, [url， config])   <span class="comment">// config是对象，不能作为第二个参数</span></span><br><span class="line">											<span class="comment">// 可以把对象解构出来使用，如config.a、config.b等</span></span><br><span class="line">	<span class="comment">// useEffect第二个参数比较是使用 Object.is(1, 1) 方法来判断两个值是否为同一个值</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> [loading, data, error]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> useAxios</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/myblog/tags/react/" rel="tag"># react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/myblog/2021/06/22/react-basics/" rel="next" title="React基础">
+                <i class="fa fa-chevron-left"></i> React基础
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yilidan</p>
+              <p class="site-description motion-element" itemprop="description">写一些平时码code的一点小收货。。。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/myblog/archives">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/yilidan" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#State-Hook"><span class="nav-number">1.</span> <span class="nav-text">State Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Effect-Hook"><span class="nav-number">2.</span> <span class="nav-text">Effect Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所有的定时任务或全局事件绑定，一定要在组件销毁时，清除定时任务或解绑全局事件，防止内存泄漏"><span class="nav-number">3.</span> <span class="nav-text">*所有的定时任务或全局事件绑定，一定要在组件销毁时，清除定时任务或解绑全局事件，防止内存泄漏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useRef-使用"><span class="nav-number">4.</span> <span class="nav-text">useRef 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useContext-使用"><span class="nav-number">5.</span> <span class="nav-text">useContext 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useReducer-使用"><span class="nav-number">6.</span> <span class="nav-text">useReducer 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useMemo-使用"><span class="nav-number">7.</span> <span class="nav-text">useMemo 使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#useCallback使用"><span class="nav-number">8.</span> <span class="nav-text">useCallback使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义-Hook"><span class="nav-number">9.</span> <span class="nav-text">自定义 Hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hooks使用规范"><span class="nav-number">10.</span> <span class="nav-text">Hooks使用规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于Hooks调用顺序"><span class="nav-number">11.</span> <span class="nav-text">关于Hooks调用顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class组件逻辑复用"><span class="nav-number">12.</span> <span class="nav-text">class组件逻辑复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hooks组件逻辑复用好处"><span class="nav-number">13.</span> <span class="nav-text">Hooks组件逻辑复用好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#React-Hooks注意事项（坑点）"><span class="nav-number">14.</span> <span class="nav-text">React Hooks注意事项（坑点）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yilidan</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/myblog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/myblog/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/myblog/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/myblog/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/myblog/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/myblog/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/myblog/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/myblog/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
